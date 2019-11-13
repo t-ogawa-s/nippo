@@ -20,7 +20,7 @@ jobs:
     - name: test and lint
       run: |
         npm ci
-        npm run test
+        npm run test:unit
         npm run lint
       env:
         CI: true
