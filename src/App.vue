@@ -1,22 +1,22 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <mainContent msg="Welcome to Your Vue.js App" />
+    <main class="wrapper">
+      <h1 class="heading1">タスクを始める</h1>
+      <p>入力済みタスクは後ほど編集できます。</p>
+      <input type="text" />
+      <button>追加</button>
+      <button>クリア</button>
+    </main>
   </div>
 </template>
 
 <script>
-import { mainContent } from "./components/mainContent.vue";
-
 export default {
-  name: "app",
-  components: {
-    mainContent
-  }
+  name: "app"
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
