@@ -19,7 +19,11 @@ export class taskModel {
     this._startTime = this.getCurrentTime();
   }
 
-  makeId = () => {
+  get id() {
+    return this._id;
+  }
+
+  makeId() {
     const length = 8;
     // 生成する文字列に含める文字セット
     const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -29,10 +33,10 @@ export class taskModel {
       result += characters[Math.floor(Math.random() * charactersLength)];
     }
     return result;
-  };
+  }
 
-  getCurrentTime = () => {
+  getCurrentTime() {
     const currentTime = new Date();
     return currentTime.toUTCString();
-  };
+  }
 }
