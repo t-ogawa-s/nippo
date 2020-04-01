@@ -8,7 +8,18 @@
         <button @click="onClickAddTask">追加</button>
         <button>クリア</button>
       </div>
-      <div class="tasks">
+      <div class="taskList">
+        <div class="taskCard">
+          <div class="taskCard__controller">
+            <button class="taskCard__run">▶︎</button>
+            <button class="taskCard__pause">■</button>
+          </div>
+          <div class="taskCard__text">
+            <div class="taskCard__name">タスク管理機能の作成</div>
+            <div class="taskCard__time">15:00</div>
+          </div>
+          <button class="taskCard__delete">-</button>
+        </div>
         <div class="taskCard">
           <div class="taskCard__controller">
             <button class="taskCard__run">▶︎</button>
@@ -51,31 +62,73 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$backgroundColor: #eee;
+$fontColor: #2c3e50;
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $fontColor;
   margin-top: 60px;
 }
 .wrapper {
   max-width: 1000px;
   margin: 0 auto;
 }
-.tasks {
+.taskList {
   margin-top: 15px;
 }
 .taskCard {
+  $block: &;
   display: flex;
-  background-color: #eee;
-  color: #000;
+  align-items: center;
+  background-color: $backgroundColor;
+  color: $fontColor;
   width: 100%;
   max-width: 375px;
   margin: 0 auto;
   border-radius: 5px;
+  padding: 5px;
+  border: 2px solid $backgroundColor;
+  box-sizing: border-box;
   &__text {
     display: flex;
+    flex-grow: 1;
+    align-items: center;
+    padding: 0 10px;
+  }
+  &__name {
+    flex-grow: 1;
+    text-align: left;
+  }
+  &__time {
+    flex-grow: 0;
+  }
+  &__run,
+  &__pause,
+  &__delete {
+    flex-grow: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+  }
+  &__pause {
+    display: none;
+  }
+  &.is-run {
+    border-color: $fontColor;
+    background-color: $fontColor;
+    color: #fff;
+    #{$block}__run {
+      display: none;
+    }
+    #{$block}__pause {
+      display: block;
+    }
+  }
+  & + & {
+    margin-top: 10px;
   }
 }
 </style>

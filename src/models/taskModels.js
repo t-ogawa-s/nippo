@@ -15,8 +15,6 @@ export class taskModels {
       .filter(v => v.id !== taskModel.id)
       .concat(taskModel);
 
-    console.log("updatedList", updatedList);
-
     return new taskModels(updatedList);
   }
 
