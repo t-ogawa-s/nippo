@@ -1,8 +1,8 @@
 export class taskModels {
-  list_;
+  _list;
 
   constructor(list = []) {
-    this.list_ = list;
+    this._list = list;
   }
 
   reset() {
@@ -10,17 +10,17 @@ export class taskModels {
   }
 
   add(taskModel) {
-    const list = this.list_.map(v => v); //clone;
+    const list = this._list.map(v => v); //clone;
     const updatedList = list
       .filter(v => v.id !== taskModel.id)
       .concat(taskModel);
 
     console.log("updatedList", updatedList);
-    console.log(
-      "filterd",
-      list.filter(v => v.id !== taskModel.id)
-    );
 
     return new taskModels(updatedList);
+  }
+
+  get list() {
+    return this._list;
   }
 }

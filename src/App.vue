@@ -43,8 +43,8 @@ export default {
         console.log("nameが未入力です");
         return;
       }
-      console.log(new taskModel(this.inputText));
-      console.log(this.taskModels.add(new taskModel(this.inputText)));
+      this.taskModels = this.taskModels.add(new taskModel(this.inputText));
+      console.log("taskModels.list", this.taskModels.list);
     }
   }
 };
