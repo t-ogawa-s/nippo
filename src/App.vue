@@ -11,7 +11,7 @@
       <div class="taskList">
         <div class="taskCard">
           <div class="taskCard__controller">
-            <button class="taskCard__run">▶︎</button>
+            <button class="taskCard__run" @click="onClickRun">▶︎</button>
             <button class="taskCard__pause">■</button>
           </div>
           <div class="taskCard__text">
@@ -54,8 +54,16 @@ export default {
         console.log("nameが未入力です");
         return;
       }
-      this.taskModels = this.taskModels.add(new taskModel(this.inputText));
+      const currentTask = new taskModel(this.inputText);
+      this.taskModels = this.taskModels.add(currentTask);
       console.log("taskModels.list", this.taskModels.list);
+      console.log("run", currentTask.run());
+    },
+    onClickRun: function() {
+      // クリックされたタスクを特定する方法
+      // 要素にdata属性で持たせる
+      console.log("this.taskModels.list[0]", this.taskModels.list[0]);
+      this.taskModels.list[0].run();
     }
   }
 };
