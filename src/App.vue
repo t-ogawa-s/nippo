@@ -8,26 +8,17 @@
         <button @click="onClickAddTask">追加</button>
         <button>クリア</button>
       </div>
-      <div class="taskList">
-        <div class="taskCard">
+      <div class="taskList" v-for="item in taskModels.list" :key="item.id">
+        <div class="taskCard" v-bind:class="statusClasses[item.status]">
           <div class="taskCard__controller">
-            <button class="taskCard__run" @click="onClickRun">▶︎</button>
-            <button class="taskCard__pause">■</button>
+            <button class="taskCard__run" @click="onClickRun(item)">▶︎</button>
+            <button class="taskCard__pause" @click="onClickPause(item)">
+              ■
+            </button>
           </div>
           <div class="taskCard__text">
-            <div class="taskCard__name">タスク管理機能の作成</div>
-            <div class="taskCard__time">15:00</div>
-          </div>
-          <button class="taskCard__delete">-</button>
-        </div>
-        <div class="taskCard">
-          <div class="taskCard__controller">
-            <button class="taskCard__run">▶︎</button>
-            <button class="taskCard__pause">■</button>
-          </div>
-          <div class="taskCard__text">
-            <div class="taskCard__name">タスク管理機能の作成</div>
-            <div class="taskCard__time">15:00</div>
+            <div class="taskCard__name">{{ item.name }}</div>
+            <div class="taskCard__time">{{ item._countedTime }}</div>
           </div>
           <button class="taskCard__delete">-</button>
         </div>
@@ -45,7 +36,11 @@ export default {
   data: () => {
     return {
       inputText: "",
-      taskModels: new taskModels()
+      taskModels: new taskModels(),
+      statusClasses: {
+        paused: "is-paused",
+        running: "is-running"
+      }
     };
   },
   methods: {
@@ -57,13 +52,12 @@ export default {
       const currentTask = new taskModel(this.inputText);
       this.taskModels = this.taskModels.add(currentTask);
       console.log("taskModels.list", this.taskModels.list);
-      console.log("run", currentTask.run());
     },
-    onClickRun: function() {
-      // クリックされたタスクを特定する方法
-      // 要素にdata属性で持たせる
-      console.log("this.taskModels.list[0]", this.taskModels.list[0]);
-      this.taskModels.list[0].run();
+    onClickRun: function(taskItem) {
+      taskItem.run();
+    },
+    onClickPause: function(taskItem) {
+      taskItem.stop();
     }
   }
 };
@@ -124,7 +118,7 @@ $fontColor: #2c3e50;
   &__pause {
     display: none;
   }
-  &.is-run {
+  &.is-running {
     border-color: $fontColor;
     background-color: $fontColor;
     color: #fff;

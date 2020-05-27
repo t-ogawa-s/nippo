@@ -1,4 +1,4 @@
-const STATUS = { paused: "paused", running: "running" };
+export const STATUS = { paused: "paused", running: "running" };
 
 export class taskModel {
   _id;
@@ -21,6 +21,14 @@ export class taskModel {
 
   get id() {
     return this._id;
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  get status() {
+    return this._status;
   }
 
   makeId() {
@@ -66,10 +74,16 @@ export class taskModel {
   }
 
   run() {
+    this._startTime = this.getCurrentTime();
+    this._status = STATUS.running;
+    console.log("this._status", this._status);
+  }
+
+  stop() {
     console.log("経過時間", this.getElapsedTime());
     this._countedTime = this._countedTime + this.getElapsedTime().src;
     console.log("累計時間", this.makeTimeObj(this._countedTime));
+    this._status = STATUS.paused;
+    console.log("this._status", this._status);
   }
-
-  stop() {}
 }
