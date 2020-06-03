@@ -18,6 +18,12 @@ export class taskModels {
     return new taskModels(updatedList);
   }
 
+  stopAll() {
+    this.list.forEach(v => {
+      v.stop();
+    });
+  }
+
   get list() {
     return this._list;
   }

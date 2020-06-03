@@ -15,8 +15,9 @@ export class taskModel {
     this._id = this.makeId();
     this._name = name;
     this._countedTime = countedTime;
-    this._status = STATUS.running;
+    this._status = STATUS.paused;
     this._startTime = this.getCurrentTime();
+    this._intervalID;
   }
 
   get id() {
@@ -29,6 +30,10 @@ export class taskModel {
 
   get status() {
     return this._status;
+  }
+
+  get countedTime() {
+    return this.makeTimeObj(this._countedTime);
   }
 
   makeId() {
@@ -44,7 +49,7 @@ export class taskModel {
   }
 
   getCurrentTime() {
-    return new Date();
+    return new Date().getTime();
   }
 
   getElapsedTime() {
@@ -76,14 +81,15 @@ export class taskModel {
   run() {
     this._startTime = this.getCurrentTime();
     this._status = STATUS.running;
-    console.log("this._status", this._status);
+    const temp = this._countedTime;
+    this._intervalID = setInterval(() => {
+      //累積時間 = スタート時の累積時間 + 増加時間
+      this._countedTime = temp + this.getElapsedTime().src;
+    }, 100);
   }
 
   stop() {
-    console.log("経過時間", this.getElapsedTime());
-    this._countedTime = this._countedTime + this.getElapsedTime().src;
-    console.log("累計時間", this.makeTimeObj(this._countedTime));
     this._status = STATUS.paused;
-    console.log("this._status", this._status);
+    clearInterval(this._intervalID);
   }
 }

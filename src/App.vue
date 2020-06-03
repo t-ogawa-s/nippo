@@ -8,17 +8,23 @@
         <button @click="onClickAddTask">追加</button>
         <button>クリア</button>
       </div>
-      <div class="taskList" v-for="item in taskModels.list" :key="item.id">
-        <div class="taskCard" v-bind:class="statusClasses[item.status]">
+      <div
+        class="taskList"
+        v-for="taskItem in taskModels.list"
+        :key="taskItem.id"
+      >
+        <div class="taskCard" v-bind:class="statusClasses[taskItem.status]">
           <div class="taskCard__controller">
-            <button class="taskCard__run" @click="onClickRun(item)">▶︎</button>
-            <button class="taskCard__pause" @click="onClickPause(item)">
+            <button class="taskCard__run" @click="onClickRun(taskItem)">
+              ▶︎
+            </button>
+            <button class="taskCard__pause" @click="onClickPause(taskItem)">
               ■
             </button>
           </div>
           <div class="taskCard__text">
-            <div class="taskCard__name">{{ item.name }}</div>
-            <div class="taskCard__time">{{ item._countedTime }}</div>
+            <div class="taskCard__name">{{ taskItem.name }}</div>
+            <div class="taskCard__time">{{ taskItem.countedTime.text }}</div>
           </div>
           <button class="taskCard__delete">-</button>
         </div>
@@ -50,10 +56,13 @@ export default {
         return;
       }
       const currentTask = new taskModel(this.inputText);
+      this.taskModels.stopAll();
       this.taskModels = this.taskModels.add(currentTask);
+      currentTask.run();
       console.log("taskModels.list", this.taskModels.list);
     },
     onClickRun: function(taskItem) {
+      this.taskModels.stopAll();
       taskItem.run();
     },
     onClickPause: function(taskItem) {
