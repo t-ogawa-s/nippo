@@ -6,7 +6,7 @@
         <p>入力済みタスクは後ほど編集できます。</p>
         <input type="text" v-model="inputText" />
         <button @click="onClickAddTask">追加</button>
-        <button>クリア</button>
+        <button @click="onClickRemoveAll">クリア</button>
       </div>
       <div
         class="taskList"
@@ -26,7 +26,9 @@
             <div class="taskCard__name">{{ taskItem.name }}</div>
             <div class="taskCard__time">{{ taskItem.countedTime.text }}</div>
           </div>
-          <button class="taskCard__delete">-</button>
+          <button class="taskCard__delete" @click="onClickRemove(taskItem)">
+            -
+          </button>
         </div>
       </div>
     </main>
@@ -55,10 +57,11 @@ export default {
         console.log("nameが未入力です");
         return;
       }
-      const currentTask = new taskModel(this.inputText);
+      const currentTaskItem = new taskModel(this.inputText);
       this.taskModels.stopAll();
-      this.taskModels = this.taskModels.add(currentTask);
-      currentTask.run();
+      this.taskModels = this.taskModels.add(currentTaskItem);
+      currentTaskItem.run();
+      this.inputText = undefined;
       console.log("taskModels.list", this.taskModels.list);
     },
     onClickRun: function(taskItem) {
@@ -67,6 +70,12 @@ export default {
     },
     onClickPause: function(taskItem) {
       taskItem.stop();
+    },
+    onClickRemove: function(taskItem) {
+      this.taskModels = this.taskModels.remove(taskItem);
+    },
+    onClickRemoveAll: function() {
+      this.taskModels = this.taskModels.removeAll();
     }
   }
 };
