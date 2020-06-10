@@ -32,15 +32,26 @@
         </div>
       </div>
     </main>
+    <transition name="fade">
+      <confirmDialog
+        v-if="showConfirmDialog"
+        @confirmed="onConfirmed"
+        @cancelled="onCancelled"
+      ></confirmDialog>
+    </transition>
   </div>
 </template>
 
 <script>
 import { taskModel } from "./models/taskModel";
 import { taskModels } from "./models/taskModels";
+import confirmDialog from "./confirm";
 
 export default {
   name: "app",
+  components: {
+    confirmDialog
+  },
   data: () => {
     return {
       inputText: "",
@@ -48,7 +59,8 @@ export default {
       statusClasses: {
         paused: "is-paused",
         running: "is-running"
-      }
+      },
+      showConfirmDialog: false
     };
   },
   methods: {
@@ -72,6 +84,7 @@ export default {
       taskItem.stop();
     },
     onClickRemove: function(taskItem) {
+      this.showConfirmDialog = true;
       this.taskModels = this.taskModels.remove(taskItem);
     },
     onClickRemoveAll: function() {
@@ -150,5 +163,13 @@ $fontColor: #2c3e50;
   & + & {
     margin-top: 10px;
   }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
