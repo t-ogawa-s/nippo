@@ -35,6 +35,7 @@
     <transition name="fade">
       <confirmDialog
         v-if="showConfirmDialog"
+        :task-item="currentTaskItemForConfirm"
         @confirmed="onConfirmed"
         @cancelled="onCancelled"
       ></confirmDialog>
@@ -60,7 +61,8 @@ export default {
         paused: "is-paused",
         running: "is-running"
       },
-      showConfirmDialog: false
+      showConfirmDialog: false,
+      currentTaskItemForConfirm: undefined
     };
   },
   methods: {
@@ -84,11 +86,18 @@ export default {
       taskItem.stop();
     },
     onClickRemove: function(taskItem) {
+      this.currentTaskItemForConfirm = taskItem;
       this.showConfirmDialog = true;
-      this.taskModels = this.taskModels.remove(taskItem);
     },
     onClickRemoveAll: function() {
       this.taskModels = this.taskModels.removeAll();
+    },
+    onConfirmed: function(taskItem) {
+      this.showConfirmDialog = false;
+      this.taskModels = this.taskModels.remove(taskItem);
+    },
+    onCancelled: function() {
+      this.showConfirmDialog = false;
     }
   }
 };

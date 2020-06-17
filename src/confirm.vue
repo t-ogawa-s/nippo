@@ -15,14 +15,19 @@
 </template>
 
 <script>
+import { taskModel } from "./models/taskModel";
+
 export default {
   name: "confirmDialog",
+  props: {
+    taskItem: taskModel
+  },
   methods: {
     onClickCancel: function() {
       this.$emit("cancelled");
     },
     onClickConfirm: function() {
-      this.$emit("confirmed");
+      this.$emit("confirmed", this.taskItem);
     }
   }
 };
