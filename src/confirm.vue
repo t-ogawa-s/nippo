@@ -2,12 +2,12 @@
   <div class="dialog">
     <div class="dialog__inner">
       <div class="dialog__body">
-        <p class="dialog__text">削除してよろしいですか？</p>
+        <p class="dialog__text">{{ confirmText }}</p>
       </div>
       <div class="dialog__footer">
-        <button class="dialog__button" @click="onClickConfirm">削除する</button>
-        <button class="dialog__button" @click="onClickConfirm">
-          キャンセル
+        <button class="dialog__button" @click="onClickConfirm">はい</button>
+        <button class="dialog__button" @click="onClickCancel">
+          いいえ
         </button>
       </div>
     </div>
@@ -20,7 +20,8 @@ import { taskModel } from "./models/taskModel";
 export default {
   name: "confirmDialog",
   props: {
-    taskItem: taskModel
+    taskItem: taskModel,
+    confirmText: String
   },
   methods: {
     onClickCancel: function() {
@@ -48,7 +49,8 @@ export default {
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  width: 276px;
+  width: calc(100% - 30px);
+  max-width: 300px;
   padding: 30px 0 0;
   overflow: hidden;
   box-sizing: border-box;
@@ -81,5 +83,8 @@ export default {
   font-size: 14px;
   background-color: #f7f7f7;
   border: none;
+  & + .dialog__button {
+    border-left: 1px solid #ccc;
+  }
 }
 </style>

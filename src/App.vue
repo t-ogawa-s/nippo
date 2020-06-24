@@ -34,10 +34,19 @@
     </main>
     <transition name="fade">
       <confirmDialog
-        v-if="showConfirmDialog"
+        v-if="showConfirmDialogRemove"
         :task-item="currentTaskItemForConfirm"
-        @confirmed="onConfirmed"
-        @cancelled="onCancelled"
+        :confirm-text="confirmTextRemove"
+        @confirmed="onConfirmedRemove"
+        @cancelled="onCancelledRemove"
+      ></confirmDialog>
+    </transition>
+    <transition name="fade">
+      <confirmDialog
+        v-if="showConfirmDialogAllRemove"
+        :confirm-text="confirmTextAllRemove"
+        @confirmed="onConfirmedAllRemove"
+        @cancelled="onCancelledAllRemove"
       ></confirmDialog>
     </transition>
   </div>
@@ -47,6 +56,7 @@
 import { taskModel } from "./models/taskModel";
 import { taskModels } from "./models/taskModels";
 import confirmDialog from "./confirm";
+import { confirmTextRemove, confirmTextAllRemove } from "./definitions";
 
 export default {
   name: "app",
@@ -61,8 +71,11 @@ export default {
         paused: "is-paused",
         running: "is-running"
       },
-      showConfirmDialog: false,
-      currentTaskItemForConfirm: undefined
+      showConfirmDialogRemove: false,
+      showConfirmDialogAllRemove: false,
+      currentTaskItemForConfirm: undefined,
+      confirmTextRemove: confirmTextRemove,
+      confirmTextAllRemove: confirmTextAllRemove
     };
   },
   methods: {
@@ -87,17 +100,24 @@ export default {
     },
     onClickRemove: function(taskItem) {
       this.currentTaskItemForConfirm = taskItem;
-      this.showConfirmDialog = true;
+      this.showConfirmDialogRemove = true;
     },
     onClickRemoveAll: function() {
-      this.taskModels = this.taskModels.removeAll();
+      this.showConfirmDialogAllRemove = true;
     },
-    onConfirmed: function(taskItem) {
-      this.showConfirmDialog = false;
+    onConfirmedRemove: function(taskItem) {
+      this.showConfirmDialogRemove = false;
       this.taskModels = this.taskModels.remove(taskItem);
     },
-    onCancelled: function() {
-      this.showConfirmDialog = false;
+    onCancelledRemove: function() {
+      this.showConfirmDialogRemove = false;
+    },
+    onConfirmedAllRemove: function() {
+      this.showConfirmDialogAllRemove = false;
+      this.taskModels = this.taskModels.removeAll();
+    },
+    onCancelledAllRemove: function() {
+      this.showConfirmDialogAllRemove = false;
     }
   }
 };
