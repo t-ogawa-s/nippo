@@ -31,6 +31,10 @@
         </div>
       </div>
       <button class="clearButton" @click="onClickRemoveAll">クリア</button>
+      <div class="export">
+        <button class="export__preview">確認</button>
+        <button class="export__copy">クリップボードに貼り付け</button>
+      </div>
     </main>
     <transition name="fade">
       <confirmDialog
@@ -127,7 +131,7 @@ export default {
 <style scoped lang="scss">
 //color
 $mainColor: #f5f1ef;
-$darkColor: #333;
+$darkColor: #373432;
 $accentColor: #849ca8;
 $baseColor: #a89084;
 
@@ -206,7 +210,6 @@ p {
   border-radius: 5px;
   padding: 5px;
   background: $mainColor;
-  border: 1px solid $baseColor;
   box-sizing: border-box;
   &__text {
     display: flex;
@@ -230,13 +233,12 @@ p {
     height: 30px;
     border-radius: 5px;
     border: 1px solid $baseColor;
-    color: $baseColor;
+    color: $darkColor;
   }
   &__pause {
     display: none;
   }
   &.is-running {
-    border-color: $baseColor;
     background-color: $baseColor;
     #{$block}__run {
       display: none;
@@ -247,6 +249,23 @@ p {
   }
   & + & {
     margin-top: 10px;
+  }
+}
+.export {
+  margin-top: $marginL;
+  &__preview,
+  &__copy {
+    display: block;
+    margin-top: $marginS;
+    border: 0;
+    background: $accentColor;
+    color: $mainColor;
+    border-radius: 15px;
+    width: 100%;
+    padding: 5px;
+    font-size: $fontM;
+    font-weight: bold;
+    margin-left: auto;
   }
 }
 .clearButton {
