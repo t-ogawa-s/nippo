@@ -2,11 +2,10 @@
   <div id="app">
     <main class="wrapper">
       <div class="addTask">
-        <h1 class="heading1">タスクを始める</h1>
+        <h1 class="addTask__heading">タスクを始める</h1>
         <p>入力済みタスクは後ほど編集できます。</p>
-        <input type="text" v-model="inputText" />
-        <button @click="onClickAddTask">追加</button>
-        <button @click="onClickRemoveAll">クリア</button>
+        <input class="addTask__input" type="text" v-model="inputText" />
+        <button class="addTask__addButton" @click="onClickAddTask">追加</button>
       </div>
       <div
         class="taskList"
@@ -31,6 +30,7 @@
           </button>
         </div>
       </div>
+      <button class="clearButton" @click="onClickRemoveAll">クリア</button>
     </main>
     <transition name="fade">
       <confirmDialog
@@ -57,6 +57,7 @@ import { taskModel } from "./models/taskModel";
 import { taskModels } from "./models/taskModels";
 import confirmDialog from "./confirm";
 import { confirmTextRemove, confirmTextAllRemove } from "./definitions";
+import "normalize.css";
 
 export default {
   name: "app",
@@ -124,35 +125,88 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$backgroundColor: #eee;
-$fontColor: #2c3e50;
+//color
+$mainColor: #f5f1ef;
+$darkColor: #333;
+$accentColor: #849ca8;
+$baseColor: #a89084;
+
+//margin
+$marginS: 8px;
+$marginM: 16px;
+$marginL: 24px;
+
+//font
+$fontS: 10px;
+$fontM: 14px;
+$fontL: 16px;
+$fontXL: 18px;
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: $fontColor;
-  margin-top: 60px;
+  color: $darkColor;
+  padding: 32px 16px;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 .wrapper {
   max-width: 1000px;
   margin: 0 auto;
 }
+p {
+  font-size: $fontM;
+  text-align: left;
+  margin: $marginS 0;
+}
+.addTask {
+  &__heading {
+    font-size: $fontXL;
+    font-weight: normal;
+    text-align: left;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #000;
+    margin: 0 0 $marginM 0;
+  }
+  &__input {
+    width: 100%;
+    border: 1px solid $darkColor;
+    border-radius: 3px;
+    padding: $marginS;
+    box-sizing: border-box;
+    font-size: $fontM;
+  }
+  &__addButton {
+    display: block;
+    margin-top: $marginS;
+    border: 0;
+    background: $accentColor;
+    color: $mainColor;
+    border-radius: 15px;
+    width: 120px;
+    padding: 5px;
+    font-size: $fontM;
+    font-weight: bold;
+    margin-left: auto;
+  }
+}
 .taskList {
-  margin-top: 15px;
+  margin-top: $marginM;
 }
 .taskCard {
   $block: &;
   display: flex;
   align-items: center;
-  background-color: $backgroundColor;
-  color: $fontColor;
+  color: $darkColor;
   width: 100%;
   max-width: 375px;
   margin: 0 auto;
   border-radius: 5px;
   padding: 5px;
-  border: 2px solid $backgroundColor;
+  background: $mainColor;
+  border: 1px solid $baseColor;
   box-sizing: border-box;
   &__text {
     display: flex;
@@ -166,6 +220,7 @@ $fontColor: #2c3e50;
   }
   &__time {
     flex-grow: 0;
+    margin-left: 5px;
   }
   &__run,
   &__pause,
@@ -174,14 +229,15 @@ $fontColor: #2c3e50;
     width: 30px;
     height: 30px;
     border-radius: 5px;
+    border: 1px solid $baseColor;
+    color: $baseColor;
   }
   &__pause {
     display: none;
   }
   &.is-running {
-    border-color: $fontColor;
-    background-color: $fontColor;
-    color: #fff;
+    border-color: $baseColor;
+    background-color: $baseColor;
     #{$block}__run {
       display: none;
     }
@@ -192,6 +248,19 @@ $fontColor: #2c3e50;
   & + & {
     margin-top: 10px;
   }
+}
+.clearButton {
+  display: block;
+  margin-top: $marginS;
+  border: 0;
+  background: $accentColor;
+  color: $mainColor;
+  border-radius: 15px;
+  width: 120px;
+  padding: 5px;
+  font-size: $fontM;
+  font-weight: bold;
+  margin-left: auto;
 }
 .fade-enter-active,
 .fade-leave-active {
