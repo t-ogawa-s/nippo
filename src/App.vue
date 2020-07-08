@@ -32,8 +32,10 @@
       </div>
       <button class="clearButton" @click="onClickRemoveAll">クリア</button>
       <div class="export">
-        <button class="export__preview">確認</button>
-        <button class="export__copy">クリップボードに貼り付け</button>
+        <button class="export__preview" @click="onClickPreview">確認</button>
+        <button class="export__copy" @click="onClickCopy">
+          クリップボードにコピー
+        </button>
       </div>
     </main>
     <transition name="fade">
@@ -53,6 +55,13 @@
         @cancelled="onCancelledAllRemove"
       ></confirmDialog>
     </transition>
+    <transition name="fade">
+      <previewModal
+        v-if="showPreview"
+        :task-models="taskModels"
+        @closed="onPreviewClose"
+      ></previewModal>
+    </transition>
   </div>
 </template>
 
@@ -60,13 +69,15 @@
 import { taskModel } from "./models/taskModel";
 import { taskModels } from "./models/taskModels";
 import confirmDialog from "./confirm";
+import previewModal from "./preview";
 import { confirmTextRemove, confirmTextAllRemove } from "./definitions";
 import "normalize.css";
 
 export default {
   name: "app",
   components: {
-    confirmDialog
+    confirmDialog,
+    previewModal
   },
   data: () => {
     return {
@@ -80,7 +91,8 @@ export default {
       showConfirmDialogAllRemove: false,
       currentTaskItemForConfirm: undefined,
       confirmTextRemove: confirmTextRemove,
-      confirmTextAllRemove: confirmTextAllRemove
+      confirmTextAllRemove: confirmTextAllRemove,
+      showPreview: false
     };
   },
   methods: {
@@ -123,6 +135,13 @@ export default {
     },
     onCancelledAllRemove: function() {
       this.showConfirmDialogAllRemove = false;
+    },
+    onClickPreview: function() {
+      this.showPreview = true;
+    },
+    onClickCopy: function() {},
+    onPreviewClose: function() {
+      this.showPreview = false;
     }
   }
 };
@@ -168,7 +187,7 @@ p {
 .addTask {
   &__heading {
     font-size: $fontXL;
-    font-weight: normal;
+    font-weight: bold;
     text-align: left;
     padding-bottom: 5px;
     border-bottom: 1px solid #000;
@@ -240,6 +259,9 @@ p {
   }
   &.is-running {
     background-color: $baseColor;
+    #{$block}__text {
+      font-weight: bold;
+    }
     #{$block}__run {
       display: none;
     }
