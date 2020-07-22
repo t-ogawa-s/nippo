@@ -137,6 +137,10 @@ export default {
       this.showConfirmDialogAllRemove = false;
     },
     onClickPreview: function() {
+      if (!this.taskModels.list.length) {
+        console.log("タスクがありません");
+        return;
+      }
       this.showPreview = true;
     },
     onClickCopy: function() {},
@@ -148,22 +152,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-//color
-$mainColor: #f5f1ef;
-$darkColor: #373432;
-$accentColor: #849ca8;
-$baseColor: #a89084;
-
-//margin
-$marginS: 8px;
-$marginM: 16px;
-$marginL: 24px;
-
-//font
-$fontS: 10px;
-$fontM: 14px;
-$fontL: 16px;
-$fontXL: 18px;
+@import "./scss/_variables.scss";
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -213,6 +202,7 @@ p {
     font-size: $fontM;
     font-weight: bold;
     margin-left: auto;
+    cursor: pointer;
   }
 }
 .taskList {
@@ -253,6 +243,7 @@ p {
     border-radius: 5px;
     border: 1px solid $baseColor;
     color: $darkColor;
+    cursor: pointer;
   }
   &__pause {
     display: none;
@@ -288,6 +279,7 @@ p {
     font-size: $fontM;
     font-weight: bold;
     margin-left: auto;
+    cursor: pointer;
   }
 }
 .clearButton {
@@ -302,6 +294,7 @@ p {
   font-size: $fontM;
   font-weight: bold;
   margin-left: auto;
+  cursor: pointer;
 }
 .fade-enter-active,
 .fade-leave-active {

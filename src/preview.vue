@@ -1,7 +1,12 @@
 <template>
   <div class="preview">
     <h2 class="heading">投稿用テキスト</h2>
-    <div class="textContainer"></div>
+    <div class="textContainer">
+      #今日やったこと<br>
+      <span v-for="taskItem in taskModels.list" :key="taskItem.id">
+        - {{ taskItem.name }} {{ taskItem.countedTime.roundedHour }}<br>
+      </span>
+    </div>
     <div class="buttons">
       <button class="buttons__back" @click="onClickClose">戻る</button>
       <button class="button__copy">クリップボードにコピー</button>
@@ -28,6 +33,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "./scss/_variables.scss";
+
 .preview {
   position: fixed;
   width: 100%;
@@ -37,5 +44,10 @@ export default {
   right: 0;
   bottom: 0;
   background: #fff;
+  padding: $marginL $marginM;
+  box-sizing: border-box;
+}
+.textContainer {
+  text-align: left;
 }
 </style>
