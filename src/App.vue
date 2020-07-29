@@ -196,9 +196,9 @@ p {
     border: 0;
     background: $accentColor;
     color: $mainColor;
-    border-radius: 15px;
+    border-radius: 16px;
     width: 120px;
-    padding: 5px;
+    padding: 8px;
     font-size: $fontM;
     font-weight: bold;
     margin-left: auto;
@@ -273,9 +273,9 @@ p {
     border: 0;
     background: $accentColor;
     color: $mainColor;
-    border-radius: 15px;
+    border-radius: 16px;
     width: 100%;
-    padding: 5px;
+    padding: 8px;
     font-size: $fontM;
     font-weight: bold;
     margin-left: auto;
@@ -288,9 +288,9 @@ p {
   border: 0;
   background: $accentColor;
   color: $mainColor;
-  border-radius: 15px;
+  border-radius: 16px;
   width: 120px;
-  padding: 5px;
+  padding: 8px;
   font-size: $fontM;
   font-weight: bold;
   margin-left: auto;
