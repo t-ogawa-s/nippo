@@ -1,17 +1,13 @@
 <template>
   <div class="preview">
     <h2 class="heading">投稿用テキスト</h2>
-    <div class="textContainer">
-      #今日やったこと
-      <br />
-      <span v-for="taskItem in taskModels.list" :key="taskItem.id">
-        - {{ taskItem.name }} {{ taskItem.countedTime.roundedHour }}
-        <br />
-      </span>
-    </div>
+    <textarea class="textContainer" v-model="outputText"></textarea>
     <div class="buttons">
       <button class="buttons__back" @click="onClickClose">戻る</button>
-      <button class="buttons__copy">クリップボードに<br>コピー</button>
+      <button class="buttons__copy" @click="onClickCopy">
+        クリップボードに
+        <br />コピー
+      </button>
     </div>
   </div>
 </template>
@@ -27,9 +23,23 @@ export default {
   mounted: function() {
     console.log("taskmodels on preview", this.taskModels);
   },
+  computed: {
+    outputText: function() {
+      //時間の経過がトリガーになって繰り返し処理されている
+      //deep copyしてModel参照を切る or 確認時は時間を止めれば止まる
+      return '#今日やったこと\n' + this.taskModels.list.map(taskItem => {
+        return `- ${taskItem.name} ${taskItem.countedTime.roundedHour}`;
+      }).join('\n');
+    }
+  },
   methods: {
     onClickClose: function() {
       this.$emit("closed");
+    },
+    onClickCopy: function() {
+      const textarea = document.querySelector('.textContainer');
+      textarea.select();
+      document.execCommand("copy");
     }
   }
 };
@@ -52,6 +62,10 @@ export default {
 .textContainer {
   text-align: left;
   font-size: $fontM;
+  width: 100%;
+  height: 300px;
+  padding: $marginS;
+  box-sizing: border-box;
 }
 .heading {
   font-size: $fontL;
