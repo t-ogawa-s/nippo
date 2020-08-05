@@ -1,7 +1,7 @@
 <template>
   <div class="preview">
     <h2 class="heading">投稿用テキスト</h2>
-    <textarea class="textContainer" v-model="outputText"></textarea>
+    <textarea class="textContainer" ref="textContainer" v-model="outputText"></textarea>
     <div class="buttons">
       <button class="buttons__back" @click="onClickClose">戻る</button>
       <button class="buttons__copy" @click="onClickCopy">
@@ -20,27 +20,27 @@ export default {
   props: {
     taskModels: taskModels
   },
-  mounted: function() {
-    console.log("taskmodels on preview", this.taskModels);
-  },
-  computed: {
-    outputText: function() {
-      //時間の経過がトリガーになって繰り返し処理されている
-      //deep copyしてModel参照を切る or 確認時は時間を止めれば止まる
-      return '#今日やったこと\n' + this.taskModels.list.map(taskItem => {
-        return `- ${taskItem.name} ${taskItem.countedTime.roundedHour}`;
-      }).join('\n');
+  data: () => {
+    return {
+      outputText: undefined
     }
+  },
+  mounted: function() {
+    this.outputText = this.makeOutputText();
   },
   methods: {
     onClickClose: function() {
       this.$emit("closed");
     },
     onClickCopy: function() {
-      const textarea = document.querySelector('.textContainer');
-      textarea.select();
+      this.$refs.textContainer.select();
       document.execCommand("copy");
-    }
+    },
+    makeOutputText: function() {
+      return '#今日やったこと\n' + this.taskModels.list.map(taskItem => {
+        return `- ${taskItem.name} ${taskItem.countedTime.roundedHour}`;
+      }).join('\n');
+    },
   }
 };
 </script>

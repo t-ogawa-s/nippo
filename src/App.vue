@@ -28,7 +28,7 @@
           <button class="taskCard__delete" @click="onClickRemove(taskItem)"></button>
         </div>
       </div>
-      <button class="clearButton" @click="onClickRemoveAll">クリア</button>
+      <button class="clearButton" @click="onClickRemoveAll">全て削除</button>
       <div class="export">
         <button class="export__preview" @click="onClickPreview">確認</button>
         <button class="export__copy" @click="onClickCopy">
@@ -36,6 +36,7 @@
         </button>
       </div>
     </main>
+    <textarea class="textContainer" ref="textContainer" v-model="outputText"></textarea>
     <transition name="fade">
       <confirmDialog
         v-if="showConfirmDialogRemove"
@@ -90,7 +91,8 @@ export default {
       currentTaskItemForConfirm: undefined,
       confirmTextRemove: confirmTextRemove,
       confirmTextAllRemove: confirmTextAllRemove,
-      showPreview: false
+      showPreview: false,
+      outputText: undefined
     };
   },
   methods: {
@@ -141,10 +143,20 @@ export default {
       }
       this.showPreview = true;
     },
-    onClickCopy: function() {},
     onPreviewClose: function() {
       this.showPreview = false;
-    }
+    },
+    makeOutputText: function() {
+      return '#今日やったこと\n' + this.taskModels.list.map(taskItem => {
+        return `- ${taskItem.name} ${taskItem.countedTime.roundedHour}`;
+      }).join('\n');
+    },
+    onClickCopy: function() {
+      console.log('clicked');
+      this.outputText = this.makeOutputText();
+      this.$refs.textContainer.select();
+      document.execCommand("copy");
+    },
   }
 };
 </script>
@@ -302,6 +314,11 @@ p {
   font-weight: bold;
   margin-left: auto;
   cursor: pointer;
+}
+.textContainer {
+  opacity: 0;
+  height: 0;
+  max-height: 0;
 }
 .fade-enter-active,
 .fade-leave-active {
