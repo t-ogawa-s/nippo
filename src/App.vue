@@ -25,9 +25,7 @@
             <div class="taskCard__name">{{ taskItem.name }}</div>
             <div class="taskCard__time">{{ taskItem.countedTime.text }}</div>
           </div>
-          <button class="taskCard__delete" @click="onClickRemove(taskItem)">
-            -
-          </button>
+          <button class="taskCard__delete" @click="onClickRemove(taskItem)"></button>
         </div>
       </div>
       <button class="clearButton" @click="onClickRemoveAll">クリア</button>
@@ -247,6 +245,15 @@ p {
   }
   &__pause {
     display: none;
+  }
+  &__delete {
+    &::before {
+      display: block;
+      content: '';
+      background: url(./assets/delete.svg) no-repeat;
+      width: 14px;
+      height: 14px;
+    }
   }
   &.is-running {
     background-color: $baseColor;
