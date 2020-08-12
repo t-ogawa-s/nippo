@@ -7,6 +7,7 @@
         <input class="addTask__input" type="text" v-model="inputText" />
         <button class="addTask__addButton" @click="onClickAddTask">追加</button>
       </div>
+      <transition-group name="fade">
       <div
         class="taskList"
         v-for="taskItem in taskModels.list"
@@ -28,10 +29,13 @@
           <button class="taskCard__delete" @click="onClickRemove(taskItem)"></button>
         </div>
       </div>
-      <button class="clearButton" @click="onClickRemoveAll">全て削除</button>
+      </transition-group>
+      <transition name="fade">
+        <button class="clearButton" @click="onClickRemoveAll" v-if="isTaskAvalable">全て削除</button>
+      </transition>
       <div class="export">
-        <button class="export__preview" @click="onClickPreview">確認</button>
-        <button class="export__copy" @click="onClickCopy">
+        <button class="export__preview" @click="onClickPreview" v-if="isTaskAvalable">確認</button>
+        <button class="export__copy" @click="onClickCopy" v-if="isTaskAvalable">
           クリップボードにコピー
         </button>
       </div>
@@ -55,6 +59,14 @@
       ></confirmDialog>
     </transition>
     <transition name="fade">
+      <confirmDialog
+        v-if="showAlertDialogNoInput"
+        :confirm-text="alertNoInput"
+        :is-single-button="true"
+        @confirmed="onConfirmedAlertNoInput"
+      ></confirmDialog>
+    </transition>
+    <transition name="fade">
       <previewModal
         v-if="showPreview"
         :task-models="taskModels"
@@ -69,7 +81,7 @@ import { taskModel } from "./models/taskModel";
 import { taskModels } from "./models/taskModels";
 import confirmDialog from "./confirm";
 import previewModal from "./preview";
-import { confirmTextRemove, confirmTextAllRemove } from "./definitions";
+import { confirmTextRemove, confirmTextAllRemove, alertNoInput } from "./definitions";
 import "normalize.css";
 
 export default {
@@ -91,14 +103,24 @@ export default {
       currentTaskItemForConfirm: undefined,
       confirmTextRemove: confirmTextRemove,
       confirmTextAllRemove: confirmTextAllRemove,
+      alertNoInput: alertNoInput,
       showPreview: false,
+      showAlertDialogNoInput: false,
       outputText: undefined
     };
+  },
+  computed: {
+    isTaskAvalable: function() {
+      if (!!this.taskModels.list.length) {
+        return true;
+      }
+      return false;
+    }
   },
   methods: {
     onClickAddTask: function() {
       if (!this.inputText) {
-        console.log("nameが未入力です");
+        this.showAlertDialogNoInput = true;
         return;
       }
       const currentTaskItem = new taskModel(this.inputText);
@@ -136,8 +158,11 @@ export default {
     onCancelledAllRemove: function() {
       this.showConfirmDialogAllRemove = false;
     },
+    onConfirmedAlertNoInput: function() {
+      this.showAlertDialogNoInput =  false;
+    },
     onClickPreview: function() {
-      if (!this.taskModels.list.length) {
+      if (!this.isTaskAvalable) {
         console.log("タスクがありません");
         return;
       }
@@ -152,7 +177,6 @@ export default {
       }).join('\n');
     },
     onClickCopy: function() {
-      console.log('clicked');
       this.outputText = this.makeOutputText();
       this.$refs.textContainer.select();
       document.execCommand("copy");
@@ -175,7 +199,7 @@ export default {
   box-sizing: border-box;
 }
 .wrapper {
-  max-width: 1000px;
+  max-width: 640px;
   margin: 0 auto;
 }
 p {
@@ -224,8 +248,6 @@ p {
   align-items: center;
   color: $darkColor;
   width: 100%;
-  max-width: 375px;
-  margin: 0 auto;
   border-radius: 5px;
   padding: 5px;
   background: $mainColor;
@@ -322,7 +344,7 @@ p {
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
 }
 .fade-enter,
 .fade-leave-to {

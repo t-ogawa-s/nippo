@@ -5,10 +5,13 @@
         <p class="dialog__text">{{ confirmText }}</p>
       </div>
       <div class="dialog__footer">
-        <button class="dialog__button" @click="onClickConfirm">はい</button>
-        <button class="dialog__button" @click="onClickCancel">
-          いいえ
-        </button>
+        <button class="dialog__button" v-if="isSingleButton" @click="onClickConfirm">OK</button>
+        <template v-else>
+          <button class="dialog__button" @click="onClickConfirm">はい</button>
+          <button class="dialog__button" @click="onClickCancel">
+            いいえ
+          </button>
+        </template>
       </div>
     </div>
   </div>
@@ -21,7 +24,8 @@ export default {
   name: "confirmDialog",
   props: {
     taskItem: taskModel,
-    confirmText: String
+    confirmText: String,
+    isSingleButton: Boolean
   },
   methods: {
     onClickCancel: function() {
