@@ -1,4 +1,4 @@
-export const STATUS = { paused: "paused", running: "running" };
+export const STATUSES = { paused: "paused", running: "running" };
 
 export class taskModel {
   _id;
@@ -15,7 +15,7 @@ export class taskModel {
     this._id = this.makeId();
     this._name = name;
     this._countedTime = countedTime;
-    this._status = STATUS.paused;
+    this._status = STATUSES.paused;
     this._startTime = this.getCurrentTime();
     this._intervalID;
   }
@@ -82,7 +82,7 @@ export class taskModel {
 
   run() {
     this._startTime = this.getCurrentTime();
-    this._status = STATUS.running;
+    this._status = STATUSES.running;
     const temp = this._countedTime;
     this._intervalID = setInterval(() => {
       //累積時間 = スタート時の累積時間 + 増加時間
@@ -91,7 +91,7 @@ export class taskModel {
   }
 
   stop() {
-    this._status = STATUS.paused;
+    this._status = STATUSES.paused;
     clearInterval(this._intervalID);
   }
 }

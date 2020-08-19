@@ -15,10 +15,10 @@
       >
         <div class="taskCard" v-bind:class="statusClasses[taskItem.status]">
           <div class="taskCard__controller">
-            <button class="taskCard__run" @click="onClickRun(taskItem)">
+            <button class="taskCard__run" v-if="taskItem.status === statuses.paused" @click="onClickRun(taskItem)">
               ▶︎
             </button>
-            <button class="taskCard__pause" @click="onClickPause(taskItem)">
+            <button class="taskCard__pause" v-if="taskItem.status === statuses.running" @click="onClickPause(taskItem)">
               ■
             </button>
           </div>
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { taskModel } from "./models/taskModel";
+import { STATUSES, taskModel } from "./models/taskModel";
 import { taskModels } from "./models/taskModels";
 import confirmDialog from "./confirm";
 import previewModal from "./preview";
@@ -103,6 +103,7 @@ export default {
       currentTaskItemForConfirm: undefined,
       confirmTextRemove: confirmTextRemove,
       confirmTextAllRemove: confirmTextAllRemove,
+      statuses: STATUSES,
       alertNoInput: alertNoInput,
       showPreview: false,
       showAlertDialogNoInput: false,
@@ -193,7 +194,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: $dark;
+  color: $darkgray;
   padding: 32px 16px;
   min-height: 100vh;
   box-sizing: border-box;
@@ -221,7 +222,7 @@ p {
   }
   &__input {
     width: 100%;
-    border: 1px solid $dark;
+    border: 1px solid $darkgray;
     border-radius: 3px;
     padding: $marginS;
     box-sizing: border-box;
@@ -249,7 +250,7 @@ p {
   $block: &;
   display: flex;
   align-items: center;
-  color: $dark;
+  color: $darkgray;
   width: 100%;
   border-radius: 5px;
   padding: 5px;
@@ -276,12 +277,9 @@ p {
     width: 30px;
     height: 30px;
     border-radius: 5px;
-    border: 1px solid $accent;
-    color: $dark;
+    border: 1px solid $midgray;
+    color: $darkgray;
     cursor: pointer;
-  }
-  &__pause {
-    display: none;
   }
   &__delete {
     &::before {
@@ -297,11 +295,10 @@ p {
     #{$block}__text {
       font-weight: bold;
     }
-    #{$block}__run {
-      display: none;
-    }
-    #{$block}__pause {
-      display: block;
+    #{$block}__run,
+    #{$block}__pause,
+    #{$block}__delete {
+      border: 1px solid $accent;
     }
   }
   & + & {
@@ -330,7 +327,7 @@ p {
   display: block;
   margin-top: $marginS;
   border: 0;
-  background: $dark;
+  background: $darkgray;
   color: $white;
   border-radius: 16px;
   width: 120px;
