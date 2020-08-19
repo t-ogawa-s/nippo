@@ -193,10 +193,13 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: $darkColor;
+  color: $dark;
   padding: 32px 16px;
   min-height: 100vh;
   box-sizing: border-box;
+  button, input {
+    outline: none;
+  }
 }
 .wrapper {
   max-width: 640px;
@@ -218,7 +221,7 @@ p {
   }
   &__input {
     width: 100%;
-    border: 1px solid $darkColor;
+    border: 1px solid $dark;
     border-radius: 3px;
     padding: $marginS;
     box-sizing: border-box;
@@ -228,8 +231,8 @@ p {
     display: block;
     margin-top: $marginS;
     border: 0;
-    background: $accentColor;
-    color: $mainColor;
+    background: $positive;
+    color: $white;
     border-radius: 16px;
     width: 120px;
     padding: 8px;
@@ -246,11 +249,11 @@ p {
   $block: &;
   display: flex;
   align-items: center;
-  color: $darkColor;
+  color: $dark;
   width: 100%;
   border-radius: 5px;
   padding: 5px;
-  background: $mainColor;
+  background: $white;
   box-sizing: border-box;
   &__text {
     display: flex;
@@ -273,8 +276,8 @@ p {
     width: 30px;
     height: 30px;
     border-radius: 5px;
-    border: 1px solid $baseColor;
-    color: $darkColor;
+    border: 1px solid $accent;
+    color: $dark;
     cursor: pointer;
   }
   &__pause {
@@ -290,7 +293,7 @@ p {
     }
   }
   &.is-running {
-    background-color: $baseColor;
+    background-color: $accent;
     #{$block}__text {
       font-weight: bold;
     }
@@ -312,8 +315,8 @@ p {
     display: block;
     margin-top: $marginS;
     border: 0;
-    background: $accentColor;
-    color: $mainColor;
+    background: $positive;
+    color: $white;
     border-radius: 16px;
     width: 100%;
     padding: 8px;
@@ -327,8 +330,8 @@ p {
   display: block;
   margin-top: $marginS;
   border: 0;
-  background: $accentColor;
-  color: $mainColor;
+  background: $dark;
+  color: $white;
   border-radius: 16px;
   width: 120px;
   padding: 8px;

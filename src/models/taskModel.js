@@ -69,7 +69,7 @@ export class taskModel {
       ("00" + Math.floor(minute)).slice(-2) +
       ":" +
       ("00" + Math.round(second)).slice(-2);
-    const roundedHour = Math.round(hour * 100) / 100;
+    const roundedHour = Math.round(hour * 4) / 4;
     return {
       src: time,
       hour: hour,

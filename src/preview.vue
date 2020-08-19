@@ -78,8 +78,8 @@ export default {
     display: block;
     margin-top: $marginS;
     border: 0;
-    background: $accentColor;
-    color: $mainColor;
+    background: $positive;
+    color: $white;
     border-radius: 21px;
     width: calc(50% - 10px);
     padding: 5px;
