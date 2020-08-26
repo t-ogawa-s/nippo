@@ -58,6 +58,9 @@ export default {
   background: #fff;
   padding: $marginL $marginM;
   box-sizing: border-box;
+  button, input {
+    outline: none;
+  }
 }
 .textContainer {
   text-align: left;
@@ -87,6 +90,10 @@ export default {
     font-weight: bold;
     margin-left: auto;
     cursor: pointer;
+    transition: opacity 150ms;
+    &:hover {
+      opacity: 0.6;
+    }
   }
 }
 </style>

@@ -90,5 +90,10 @@ export default {
   & + .dialog__button {
     border-left: 1px solid #ccc;
   }
+  cursor: pointer;
+  transition: opacity 150ms;
+  &:hover {
+    opacity: 0.6;
+  }
 }
 </style>

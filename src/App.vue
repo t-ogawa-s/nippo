@@ -241,6 +241,10 @@ p {
     font-weight: bold;
     margin-left: auto;
     cursor: pointer;
+    transition: opacity 150ms;
+    &:hover {
+      opacity: 0.6;
+    }
   }
 }
 .taskList {
@@ -256,6 +260,7 @@ p {
   padding: 5px;
   background: $white;
   box-sizing: border-box;
+  transition: background-color 150ms;
   &__text {
     display: flex;
     flex-grow: 1;
@@ -280,6 +285,10 @@ p {
     border: 1px solid $midgray;
     color: $darkgray;
     cursor: pointer;
+    transition: opacity 150ms;
+    &:hover {
+      opacity: 0.6;
+    }
   }
   &__delete {
     &::before {
@@ -321,6 +330,10 @@ p {
     font-weight: bold;
     margin-left: auto;
     cursor: pointer;
+    transition: opacity 150ms;
+    &:hover {
+      opacity: 0.6;
+    }
   }
 }
 .clearButton {
@@ -336,6 +349,10 @@ p {
   font-weight: bold;
   margin-left: auto;
   cursor: pointer;
+  transition: opacity 150ms;
+  &:hover {
+    opacity: 0.6;
+  }
 }
 .textContainer {
   opacity: 0;
