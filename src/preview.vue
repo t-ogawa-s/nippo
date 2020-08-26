@@ -22,7 +22,8 @@ export default {
   },
   data: () => {
     return {
-      outputText: undefined
+      outputText: undefined,
+      sortedTasks: undefined
     }
   },
   mounted: function() {
@@ -37,10 +38,16 @@ export default {
       document.execCommand("copy");
     },
     makeOutputText: function() {
-      return '#今日やったこと\n' + this.taskModels.list.map(taskItem => {
+      this.sortedTasks = this.taskModels.sortByOld();
+      const today = this.makeTodayText();
+      return `# ${today}\n## 今日やったこと\n${this.sortedTasks.list.map(taskItem => {
         return `- ${taskItem.name} ${taskItem.countedTime.roundedHour}`;
-      }).join('\n');
+      }).join('\n')}`;
     },
+    makeTodayText: function() {
+      const today = new Date(this.taskModels.list[0].startTime);
+      return `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+    }
   }
 };
 </script>

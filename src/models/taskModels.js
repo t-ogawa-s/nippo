@@ -13,7 +13,7 @@ export class taskModels {
     const list = this._list.map(v => v); //clone;
     const updatedList = list
       .filter(item => item.id !== taskModel.id)
-      .concat(taskModel);
+      .concat(taskModel).sort((a, b) => a.startTime < b.startTime ? 1 : -1);
 
     return new taskModels(updatedList);
   }
@@ -33,6 +33,20 @@ export class taskModels {
     this.list.forEach(v => {
       v.stop();
     });
+  }
+
+  sortByNew() {
+    const list = this._list.map(v => v); //clone;
+    const updatedList = list.sort((a, b) => a.startTime < b.startTime ? 1 : -1);
+
+    return new taskModels(updatedList);
+  }
+
+  sortByOld() {
+    const list = this._list.map(v => v); //clone;
+    const updatedList = list.sort((a, b) => a.startTime > b.startTime ? 1 : -1);
+
+    return new taskModels(updatedList);
   }
 
   get list() {

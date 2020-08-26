@@ -36,6 +36,10 @@ export class taskModel {
     return this.makeTimeObj(this._countedTime);
   }
 
+  get startTime() {
+    return this._startTime;
+  }
+
   makeId() {
     const length = 8;
     // 生成する文字列に含める文字セット
