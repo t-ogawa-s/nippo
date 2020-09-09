@@ -280,6 +280,9 @@ p {
   &__run,
   &__pause,
   &__delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-grow: 0;
     width: 30px;
     height: 30px;
