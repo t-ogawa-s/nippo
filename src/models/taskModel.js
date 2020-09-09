@@ -80,7 +80,7 @@ export class taskModel {
       minute: minute,
       second: second,
       text: text,
-      roundedHour: roundedHour
+      roundedHour: roundedHour < 0.25 ? '' : roundedHour
     };
   }
 

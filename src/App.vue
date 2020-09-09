@@ -189,6 +189,8 @@ export default {
 <style scoped lang="scss">
 @import "./scss/_variables.scss";
 
+$shadow: 5px 5px 6px 0px rgba($darkgray, 0.25);
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -301,6 +303,8 @@ p {
   }
   &.is-running {
     background-color: $accent;
+    box-shadow: $shadow;
+    transition: box-shadow 100ms;
     #{$block}__text {
       font-weight: bold;
     }
@@ -338,7 +342,7 @@ p {
 }
 .clearButton {
   display: block;
-  margin-top: $marginS;
+  margin-top: $marginM;
   border: 0;
   background: $darkgray;
   color: $white;
@@ -361,7 +365,7 @@ p {
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s;
+  transition: opacity 300ms;
 }
 .fade-enter,
 .fade-leave-to {
