@@ -15,18 +15,18 @@
       >
         <div class="taskCard" v-bind:class="statusClasses[taskItem.status]">
           <div class="taskCard__controller">
-            <button class="taskCard__run" v-if="taskItem.status === statuses.paused" @click="onClickRun(taskItem)">
+            <div class="taskCard__run" v-if="taskItem.status === statuses.paused" @click="onClickRun(taskItem)">
               ▶︎
-            </button>
-            <button class="taskCard__pause" v-if="taskItem.status === statuses.running" @click="onClickPause(taskItem)">
+            </div>
+            <div class="taskCard__pause" v-if="taskItem.status === statuses.running" @click="onClickPause(taskItem)">
               ■
-            </button>
+            </div>
           </div>
           <div class="taskCard__text">
             <div class="taskCard__name">{{ taskItem.name }}</div>
             <div class="taskCard__time">{{ taskItem.countedTime.text }}</div>
           </div>
-          <button class="taskCard__delete" @click="onClickRemove(taskItem)"></button>
+          <div class="taskCard__delete" @click="onClickRemove(taskItem)"></div>
         </div>
       </div>
       </transition-group>
@@ -283,6 +283,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: $white;
     flex-grow: 0;
     width: 30px;
     height: 30px;
@@ -298,8 +299,7 @@ p {
   &__delete {
     &::before {
       display: block;
-      content: '';
-      background: url(./assets/delete.svg) no-repeat;
+      content: url('./assets/delete.svg');
       width: 14px;
       height: 14px;
     }
