@@ -4,7 +4,7 @@
       <div class="addTask">
         <h1 class="addTask__heading">タスクを始める</h1>
         <p>入力済みタスクは後ほど編集できます。</p>
-        <input class="addTask__input" type="text" v-model="inputText" />
+        <input class="addTask__input" type="text" v-model="inputText" @keydown.enter="onClickEnter" />
         <button class="addTask__addButton" @click="onClickAddTask">追加</button>
       </div>
       <transition-group name="fade">
@@ -130,6 +130,12 @@ export default {
       currentTaskItem.run();
       this.inputText = undefined;
       console.log("taskModels.list", this.taskModels.list);
+    },
+    onClickEnter: function(event) {
+      if (event.keyCode !== 13) {
+        return;
+      }
+      this.onClickAddTask();
     },
     onClickRun: function(taskItem) {
       this.taskModels.stopAll();
