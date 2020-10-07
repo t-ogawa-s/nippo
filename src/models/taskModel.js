@@ -1,4 +1,4 @@
-export const STATUSES = { paused: "paused", running: "running" };
+export const STATUSES = { paused: 'paused', running: 'running' };
 
 export class taskModel {
   _id;
@@ -43,9 +43,9 @@ export class taskModel {
   makeId() {
     const length = 8;
     // 生成する文字列に含める文字セット
-    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
-    let result = "";
+    let result = '';
     for (let i = 0; i < length; i++) {
       result += characters[Math.floor(Math.random() * charactersLength)];
     }
@@ -68,11 +68,11 @@ export class taskModel {
     const minute = (hour - Math.floor(hour)) * 60;
     const second = (minute - Math.floor(minute)) * 60;
     const text =
-      ("00" + Math.floor(hour)).slice(-2) +
-      ":" +
-      ("00" + Math.floor(minute)).slice(-2) +
-      ":" +
-      ("00" + Math.round(second)).slice(-2);
+      ('00' + Math.floor(hour)).slice(-2) +
+      ':' +
+      ('00' + Math.floor(minute)).slice(-2) +
+      ':' +
+      ('00' + Math.round(second)).slice(-2);
     const roundedHour = Math.round(hour * 4) / 4;
     return {
       src: time,

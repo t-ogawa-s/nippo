@@ -4,43 +4,75 @@
       <div class="addTask">
         <h1 class="addTask__heading">タスクを始める</h1>
         <p>入力済みタスクは後ほど編集できます。</p>
-        <input class="addTask__input" type="text" v-model="inputText" @keydown.enter="onClickEnter" />
+        <input
+          class="addTask__input"
+          type="text"
+          v-model="inputText"
+          @keydown.enter="onClickEnter"
+        />
         <button class="addTask__addButton" @click="onClickAddTask">追加</button>
       </div>
       <transition-group name="fade">
-      <div
-        class="taskList"
-        v-for="taskItem in taskModels.list"
-        :key="taskItem.id"
-      >
-        <div class="taskCard" v-bind:class="statusClasses[taskItem.status]">
-          <div class="taskCard__controller">
-            <div class="taskCard__run" v-if="taskItem.status === statuses.paused" @click="onClickRun(taskItem)">
-              ▶︎
+        <div
+          class="taskList"
+          v-for="taskItem in taskModels.list"
+          :key="taskItem.id"
+        >
+          <div class="taskCard" v-bind:class="statusClasses[taskItem.status]">
+            <div class="taskCard__controller">
+              <div
+                class="taskCard__run"
+                v-if="taskItem.status === statuses.paused"
+                @click="onClickRun(taskItem)"
+              >
+                ▶︎
+              </div>
+              <div
+                class="taskCard__pause"
+                v-if="taskItem.status === statuses.running"
+                @click="onClickPause(taskItem)"
+              >
+                ■
+              </div>
             </div>
-            <div class="taskCard__pause" v-if="taskItem.status === statuses.running" @click="onClickPause(taskItem)">
-              ■
+            <div class="taskCard__text">
+              <div class="taskCard__name">{{ taskItem.name }}</div>
+              <div class="taskCard__time">{{ taskItem.countedTime.text }}</div>
             </div>
+            <div
+              class="taskCard__delete"
+              @click="onClickRemove(taskItem)"
+            ></div>
           </div>
-          <div class="taskCard__text">
-            <div class="taskCard__name">{{ taskItem.name }}</div>
-            <div class="taskCard__time">{{ taskItem.countedTime.text }}</div>
-          </div>
-          <div class="taskCard__delete" @click="onClickRemove(taskItem)"></div>
         </div>
-      </div>
       </transition-group>
       <transition name="fade">
-        <button class="clearButton" @click="onClickRemoveAll" v-if="isTaskAvalable">全て削除</button>
+        <button
+          class="clearButton"
+          @click="onClickRemoveAll"
+          v-if="isTaskAvalable"
+        >
+          全て削除
+        </button>
       </transition>
       <div class="export">
-        <button class="export__preview" @click="onClickPreview" v-if="isTaskAvalable">確認</button>
+        <button
+          class="export__preview"
+          @click="onClickPreview"
+          v-if="isTaskAvalable"
+        >
+          確認
+        </button>
         <button class="export__copy" @click="onClickCopy" v-if="isTaskAvalable">
           クリップボードにコピー
         </button>
       </div>
     </main>
-    <textarea class="textContainer" ref="textContainer" v-model="outputText"></textarea>
+    <textarea
+      class="textContainer"
+      ref="textContainer"
+      v-model="outputText"
+    ></textarea>
     <transition name="fade">
       <confirmDialog
         v-if="showConfirmDialogRemove"
@@ -77,26 +109,30 @@
 </template>
 
 <script>
-import { STATUSES, taskModel } from "./models/taskModel";
-import { taskModels } from "./models/taskModels";
-import confirmDialog from "./confirm";
-import previewModal from "./preview";
-import { confirmTextRemove, confirmTextAllRemove, alertNoInput } from "./definitions";
-import "normalize.css";
+import { STATUSES, taskModel } from './models/taskModel';
+import { taskModels } from './models/taskModels';
+import confirmDialog from './confirm';
+import previewModal from './preview';
+import {
+  confirmTextRemove,
+  confirmTextAllRemove,
+  alertNoInput
+} from './definitions';
+import 'normalize.css';
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
     confirmDialog,
     previewModal
   },
   data: () => {
     return {
-      inputText: "",
+      inputText: '',
       taskModels: new taskModels(),
       statusClasses: {
-        paused: "is-paused",
-        running: "is-running"
+        paused: 'is-paused',
+        running: 'is-running'
       },
       showConfirmDialogRemove: false,
       showConfirmDialogAllRemove: false,
@@ -129,7 +165,7 @@ export default {
       this.taskModels = this.taskModels.add(currentTaskItem);
       currentTaskItem.run();
       this.inputText = undefined;
-      console.log("taskModels.list", this.taskModels.list);
+      console.log('taskModels.list', this.taskModels.list);
     },
     onClickEnter: function(event) {
       if (event.keyCode !== 13) {
@@ -166,11 +202,11 @@ export default {
       this.showConfirmDialogAllRemove = false;
     },
     onConfirmedAlertNoInput: function() {
-      this.showAlertDialogNoInput =  false;
+      this.showAlertDialogNoInput = false;
     },
     onClickPreview: function() {
       if (!this.isTaskAvalable) {
-        console.log("タスクがありません");
+        console.log('タスクがありません');
         return;
       }
       this.showPreview = true;
@@ -179,26 +215,31 @@ export default {
       this.showPreview = false;
     },
     makeOutputText: function() {
-      return '#今日やったこと\n' + this.taskModels.list.map(taskItem => {
-        return `- ${taskItem.name} ${taskItem.countedTime.roundedHour}`;
-      }).join('\n');
+      return (
+        '#今日やったこと\n' +
+        this.taskModels.list
+          .map(taskItem => {
+            return `- ${taskItem.name} ${taskItem.countedTime.roundedHour}`;
+          })
+          .join('\n')
+      );
     },
     onClickCopy: function() {
       this.outputText = this.makeOutputText();
       this.$refs.textContainer.select();
-      document.execCommand("copy");
-    },
+      document.execCommand('copy');
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
-@import "./scss/_variables.scss";
+@import './scss/_variables.scss';
 
 $shadow: 5px 5px 6px 0px rgba($darkgray, 0.25);
 
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -206,7 +247,8 @@ $shadow: 5px 5px 6px 0px rgba($darkgray, 0.25);
   padding: 32px 16px;
   min-height: 100vh;
   box-sizing: border-box;
-  button, input {
+  button,
+  input {
     outline: none;
   }
 }

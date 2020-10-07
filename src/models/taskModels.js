@@ -13,7 +13,8 @@ export class taskModels {
     const list = this._list.map(v => v); //clone;
     const updatedList = list
       .filter(item => item.id !== taskModel.id)
-      .concat(taskModel).sort((a, b) => a.startTime < b.startTime ? 1 : -1);
+      .concat(taskModel)
+      .sort((a, b) => (a.startTime < b.startTime ? 1 : -1));
 
     return new taskModels(updatedList);
   }
@@ -37,14 +38,18 @@ export class taskModels {
 
   sortByNew() {
     const list = this._list.map(v => v); //clone;
-    const updatedList = list.sort((a, b) => a.startTime < b.startTime ? 1 : -1);
+    const updatedList = list.sort((a, b) =>
+      a.startTime < b.startTime ? 1 : -1
+    );
 
     return new taskModels(updatedList);
   }
 
   sortByOld() {
     const list = this._list.map(v => v); //clone;
-    const updatedList = list.sort((a, b) => a.startTime > b.startTime ? 1 : -1);
+    const updatedList = list.sort((a, b) =>
+      a.startTime > b.startTime ? 1 : -1
+    );
 
     return new taskModels(updatedList);
   }

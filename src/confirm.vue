@@ -5,7 +5,13 @@
         <p class="dialog__text">{{ confirmText }}</p>
       </div>
       <div class="dialog__footer">
-        <button class="dialog__button" v-if="isSingleButton" @click="onClickConfirm">OK</button>
+        <button
+          class="dialog__button"
+          v-if="isSingleButton"
+          @click="onClickConfirm"
+        >
+          OK
+        </button>
         <template v-else>
           <button class="dialog__button" @click="onClickConfirm">はい</button>
           <button class="dialog__button" @click="onClickCancel">
@@ -18,10 +24,10 @@
 </template>
 
 <script>
-import { taskModel } from "./models/taskModel";
+import { taskModel } from './models/taskModel';
 
 export default {
-  name: "confirmDialog",
+  name: 'confirmDialog',
   props: {
     taskItem: taskModel,
     confirmText: String,
@@ -29,10 +35,10 @@ export default {
   },
   methods: {
     onClickCancel: function() {
-      this.$emit("cancelled");
+      this.$emit('cancelled');
     },
     onClickConfirm: function() {
-      this.$emit("confirmed", this.taskItem);
+      this.$emit('confirmed', this.taskItem);
     }
   }
 };
