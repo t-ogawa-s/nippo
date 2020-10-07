@@ -106,6 +106,7 @@ export default {
     font-size: $fontM;
     font-weight: bold;
     margin-left: auto;
+    min-height: 42px;
     cursor: pointer;
     transition: opacity 150ms;
     &:hover {
