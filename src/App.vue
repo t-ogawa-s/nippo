@@ -67,6 +67,12 @@
           クリップボードにコピー
         </button>
       </div>
+      <div class="notion">
+        <ul class="notion__group">
+          <li class="notion__item">15分 = 0.25刻みで時間を表示します。</li>
+          <li class="notion__item">15分未満の場合、時間は表示されません。</li>
+        </ul>
+      </div>
     </main>
     <textarea
       class="textContainer"
@@ -160,7 +166,7 @@ export default {
   },
   computed: {
     isTaskAvalable: function() {
-      if (!!this.taskModels.list.length) {
+      if (this.taskModels.list.length) {
         return true;
       }
       return false;
@@ -255,14 +261,14 @@ export default {
 <style scoped lang="scss">
 @import './scss/_variables.scss';
 
-$shadow: 5px 5px 6px 0px rgba($darkgray, 0.25);
+$shadow: 5px 5px 6px 0px rgba($textdark, 0.25);
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: $darkgray;
+  color: $textdark;
   padding: 32px 16px;
   min-height: 100vh;
   box-sizing: border-box;
@@ -291,7 +297,7 @@ p {
   }
   &__input {
     width: 100%;
-    border: 1px solid $darkgray;
+    border: 1px solid $textdark;
     border-radius: 3px;
     padding: $marginS;
     box-sizing: border-box;
@@ -323,7 +329,7 @@ p {
   $block: &;
   display: flex;
   align-items: center;
-  color: $darkgray;
+  color: $textdark;
   width: 100%;
   border-radius: 5px;
   padding: 5px;
@@ -355,8 +361,8 @@ p {
     width: 30px;
     height: 30px;
     border-radius: 5px;
-    border: 1px solid $midgray;
-    color: $darkgray;
+    border: 1px solid $textmidtone;
+    color: $textdark;
     cursor: pointer;
     transition: opacity 150ms;
     &:hover {
@@ -414,7 +420,7 @@ p {
   display: block;
   margin-top: $marginM;
   border: 0;
-  background: $darkgray;
+  background: $textdark;
   color: $white;
   border-radius: 16px;
   width: 120px;
@@ -426,6 +432,21 @@ p {
   transition: opacity 150ms;
   &:hover {
     opacity: 0.6;
+  }
+}
+.notion {
+  $block: &;
+  text-align: left;
+  margin-top: $marginL;
+  &__group {
+    padding-left: $marginM;
+  }
+  &__item {
+    font-size: 12px;
+    color: $textmidtone;
+    & + #{$block}__item {
+      margin-top: $marginS;
+    }
   }
 }
 .textContainer {
