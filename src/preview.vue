@@ -9,8 +9,7 @@
     <div class="buttons">
       <button class="buttons__back" @click="onClickClose">戻る</button>
       <button class="buttons__copy" @click="onClickCopy">
-        クリップボードに
-        <br />コピー
+        クリップボードに<span class="noReturn">コピー</span>
       </button>
     </div>
   </div>
@@ -40,6 +39,7 @@ export default {
     onClickCopy: function() {
       this.$refs.textContainer.select();
       document.execCommand('copy');
+      this.$emit('copied');
     },
     makeOutputText: function() {
       this.sortedTasks = this.taskModels.sortByOld();
@@ -72,6 +72,8 @@ export default {
   background: #fff;
   padding: $marginL $marginM;
   box-sizing: border-box;
+  max-width: 640px;
+  margin: 0 auto;
   button,
   input {
     outline: none;
@@ -109,6 +111,9 @@ export default {
     &:hover {
       opacity: 0.6;
     }
+  }
+  .noReturn {
+    display: inline-block;
   }
 }
 </style>

@@ -102,8 +102,17 @@
       <previewModal
         v-if="showPreview"
         :task-models="taskModels"
-        @closed="onPreviewClose"
+        @closed="onClosePreview"
+        @copied="onCopiedInPreview"
       ></previewModal>
+    </transition>
+    <transition name="fade">
+      <confirmDialog
+        v-if="copied"
+        :confirm-text="textOnCopied"
+        :is-single-button="true"
+        @confirmed="onCopiedClose"
+      ></confirmDialog>
     </transition>
   </div>
 </template>
@@ -116,7 +125,8 @@ import previewModal from './preview';
 import {
   confirmTextRemove,
   confirmTextAllRemove,
-  alertNoInput
+  alertNoInput,
+  textOnCopied
 } from './definitions';
 import 'normalize.css';
 
@@ -141,9 +151,11 @@ export default {
       confirmTextAllRemove: confirmTextAllRemove,
       statuses: STATUSES,
       alertNoInput: alertNoInput,
+      textOnCopied: textOnCopied,
       showPreview: false,
       showAlertDialogNoInput: false,
-      outputText: undefined
+      outputText: undefined,
+      copied: false
     };
   },
   computed: {
@@ -211,8 +223,14 @@ export default {
       }
       this.showPreview = true;
     },
-    onPreviewClose: function() {
+    onClosePreview: function() {
       this.showPreview = false;
+    },
+    onCopiedInPreview: function() {
+      this.copied = true;
+    },
+    onCopiedClose: function() {
+      this.copied = false;
     },
     makeOutputText: function() {
       return (
@@ -228,6 +246,7 @@ export default {
       this.outputText = this.makeOutputText();
       this.$refs.textContainer.select();
       document.execCommand('copy');
+      this.copied = true;
     }
   }
 };
