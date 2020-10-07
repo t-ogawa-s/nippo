@@ -1,16 +1,18 @@
 <template>
   <div class="preview">
-    <h2 class="heading">投稿用テキスト</h2>
-    <textarea
-      class="textContainer"
-      ref="textContainer"
-      v-model="outputText"
-    ></textarea>
-    <div class="buttons">
-      <button class="buttons__back" @click="onClickClose">戻る</button>
-      <button class="buttons__copy" @click="onClickCopy">
-        クリップボードに<span class="noReturn">コピー</span>
-      </button>
+    <div class="preview__container">
+      <h2 class="heading">投稿用テキスト</h2>
+      <textarea
+        class="textContainer"
+        ref="textContainer"
+        v-model="outputText"
+      ></textarea>
+      <div class="buttons">
+        <button class="buttons__back" @click="onClickClose">戻る</button>
+        <button class="buttons__copy" @click="onClickCopy">
+          クリップボードに<span class="noReturn">コピー</span>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -72,8 +74,10 @@ export default {
   background: #fff;
   padding: $marginL $marginM;
   box-sizing: border-box;
-  max-width: 640px;
-  margin: 0 auto;
+  &__container {
+    max-width: 640px;
+    margin: 0 auto;
+  }
   button,
   input {
     outline: none;

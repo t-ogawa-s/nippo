@@ -70,7 +70,13 @@
       <div class="notion">
         <ul class="notion__group">
           <li class="notion__item">15分 = 0.25刻みで時間を表示します。</li>
-          <li class="notion__item">15分未満の場合、時間は表示されません。</li>
+          <li class="notion__item">0.25未満の場合、時間は表示されません。</li>
+          <li class="notion__item">
+            きっちり15分経過でカウントアップするのではなく、多少15分に満たなくても超過してもおおよそ15分と見做してカウントします。
+          </li>
+          <li class="notion__item">
+            上記仕様のため、実際の稼働と多少差が出る可能性があります。
+          </li>
         </ul>
       </div>
     </main>
@@ -437,13 +443,14 @@ p {
 .notion {
   $block: &;
   text-align: left;
-  margin-top: $marginL;
+  margin-top: $margin2L;
   &__group {
     padding-left: $marginM;
   }
   &__item {
     font-size: 12px;
     color: $textmidtone;
+    line-height: 1.6em;
     & + #{$block}__item {
       margin-top: $marginS;
     }
