@@ -1,3 +1,5 @@
+import { taskModel } from './taskModel';
+
 export class taskModels {
   _list;
 
@@ -52,6 +54,23 @@ export class taskModels {
     );
 
     return new taskModels(updatedList);
+  }
+
+  saveList() {
+    const list = this._list.map(v => v); //clone
+    localStorage.setItem('taskList', JSON.stringify(list));
+  }
+
+  loadList() {
+    const listStrings = localStorage.getItem('taskList');
+    if (!listStrings) {
+      return false;
+    }
+    const list = JSON.parse(listStrings);
+    const taskModelArray = list.map(taskItem => {
+      return new taskModel(taskItem._name, taskItem._countedTime);
+    });
+    return new taskModels(taskModelArray);
   }
 
   get list() {
