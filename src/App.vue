@@ -170,6 +170,9 @@ export default {
       copied: false
     };
   },
+  mounted: function() {
+    this.initSaveAndLoadList();
+  },
   computed: {
     isTaskAvalable: function() {
       if (this.taskModels.list.length) {
@@ -259,6 +262,15 @@ export default {
       this.$refs.textContainer.select();
       document.execCommand('copy');
       this.copied = true;
+    },
+    initSaveAndLoadList: function() {
+      this.taskModels = this.taskModels.loadList();
+      if (!this.taskModels.list.length) {
+        return;
+      }
+      window.addEventListener('beforeunload', () => {
+        this.taskModels.saveList();
+      });
     }
   }
 };

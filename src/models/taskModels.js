@@ -64,7 +64,7 @@ export class taskModels {
   loadList() {
     const listStrings = localStorage.getItem('taskList');
     if (!listStrings) {
-      return false;
+      return new taskModels();
     }
     const list = JSON.parse(listStrings);
     const taskModelArray = list.map(taskItem => {
